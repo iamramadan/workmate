@@ -1,0 +1,158 @@
+*{
+    margin: opx;
+    box-sizing: border-box;
+    padding: opx;
+}
+.all-Item{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    height: fit-content;
+    background-color: whitesmoke;
+    height: 600px;
+}
+/* helper classes */
+.mt-2{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.justy{
+    justify-content: space-between;
+}
+body{
+    background-color: whitesmoke;
+}
+.hd{
+    color: rgb(15, 15, 221);
+    font-size: 40px;
+    font-family: cursive;
+}
+.hd2{
+    color: rgb(20, 20, 52);
+    font-size: 25px;
+    font-family: cursive;
+}
+.hd1{
+    font-size:20px;
+}
+.bgw{
+    background-color: white;
+}
+.tface{
+    padding-left: 50px;
+    padding-right: 50px;
+    border-radius: 20px;
+    padding-top: 10px;
+    box-shadow: rgb(212, 203, 203) 2rem 2rem 2rem;
+}
+#user,
+#pass{
+    width: 360px;
+    height: 40px;
+    border-radius: 010px;
+   border: 2px solid whitesmoke;
+   padding: 2px;
+   margin-bottom: 15px;
+}
+#user,
+#pass:focus{
+    width: 360px;
+    height: 40px;
+    border-radius: 010px;
+   border: 2px solid whitesmoke;
+   outline: none;
+}
+.btn{
+    height: 40px;
+    border-radius: 07.5px;
+    background-color: rgb(15, 15, 221);
+    color: white;
+    border: white 1px solid;
+}
+.btn:hover{
+    height: 40px;
+    border-radius: 10px;
+    background-color: white;
+    border: rgb(15, 15, 221) 2px solid;
+    color: rgb(15, 15, 221);
+    transition: 0.5s ease-in-out;
+    margin-bottom: 5px;
+}
+p{
+    font-size: 13px;
+    font-style: normal;
+    margin-left: 50px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 20px;
+}
+#fg{
+    text-decoration: none;
+    font-family: cursive;
+    margin-left: 110px;
+}
+.cna{
+    width: 200px;
+    height: 45px;
+    background-color: green;
+    border-radius: 8px;
+    margin-left: 80px;
+    border: white 1px solid;
+    padding: 2px;
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.cna:hover{
+    background-color: white;
+    color: green;
+    border: solid green 2px;
+    transition: 0.45s ease-in-out;
+    margin-top: 10px;
+}
+h2{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+footer{
+    background-color: white;
+    height: 200px;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+/* media query */
+@media screen and (max-width:440px){
+    .all-Item {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    h2{
+        display: none;
+    }
+    .bgw{
+        background-color: whitesmoke;
+        width: 100%;
+    }
+    #user,
+    #pass{
+        width: 350px;
+    }
+    .tface{
+        padding: none;
+    }
+}
+@media screen and ( max-width:900px){
+    .all-Item {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    #user,
+    #pass{
+        width: 350px;
+    }
+}
