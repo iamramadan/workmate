@@ -25,6 +25,14 @@ class read{
         return $result;
 
     }
+    public function readgrouptask($taskid, $taskuser){
+        $sql = "SELECT * from group_task  LEFT JOIN users and tasks ON tasks = $taskid and users = $taskuser";
+        $stm = $this->db->query($sql);
+        $stm->execute();
+        $result = $stm->fetch();
+        return $result;
+
+    }
     public function user_login($username,$password){
         $sql =  "SELECT id , username , password FROM users where username='$username' limit 1";
         $stm = $this->db->query($sql);
@@ -38,6 +46,7 @@ class read{
                 return;
             }
             $pop = array_pop($result);//removes the password from the result array;
+           // setcookie('USER_ID',$result['id'],path:'/');
         echo json_encode([
             "user_info"=>$result,
             "tasks"=>$this->readalltask($result["id"]),

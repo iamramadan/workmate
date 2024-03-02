@@ -45,7 +45,7 @@ switch ($endpoint) {
   case "createtask":
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
       $data = $_POST;
-      $create->createnewtask([$data]);
+      $create->createnewtask($data);
     }
     # code...
     break;

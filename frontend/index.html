@@ -22,32 +22,31 @@
             <button class="btn" ><a href="auth/register.html" >sign-up</a></button>
         </div>
     </div>
-    <div class="herosection">
-        <div>
-            
-        </div>
         <div class="w-100 disp-flex">
 
-            <h2 class="bold"> create your skedule</h2>
+            <h2 class="bold"> Create your schedule</h2>
+        </div>
+        <div class="status">
+             
         </div>
         <div class="d-flex">
             <form class="text-feild" method="post" id="form">
-                <input type="text" class="inp" placeholder="create task">
-                <textarea class="inp" cols="2" rows="2" placeholder="task discription ....."></textarea>
-                <input type="datetime-local" placeholder="due-time" class="inp">
-               <select name="" id="select" class="inp">
+                <input type="text" name="title" class="inp " id="title" placeholder="create task">
+                <textarea class="inp " id="description" name="description"   cols="2" rows="2" placeholder="task discription ....."></textarea>
+                <input type="datetime-local" id="date" name="due_date"  placeholder="due-time" class="inp">
+               <select class="inp" id="type">
                 <option >group</option>
                 <option >single</option>
                </select>
-                </div>
                 <button class="btn2" type="submit">+</button>
             </form>
         </div>
-    </div>
-    </hr>
     <div class="taskbar">
-        
-        
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="js/createTasks.js"></script>
+<script src="js/fetchuserdata.js"></script>
+<!-- <script src="js/getTasks.js"></script> -->
 </body>
 </html>

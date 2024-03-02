@@ -9,7 +9,7 @@ form.onsubmit = e => {
     e.preventDefault()
     const form_data = new FormData(form);
     console.log(form_data)
-    fetch(`${baseurl}createuser`,
+    fetch(`${baseUrl}createuser`,
             {method:"POST",
             // headers: {
             //     "Accept": "application/json, text/plain, "/" ",

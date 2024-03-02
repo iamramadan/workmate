@@ -1,5 +1,6 @@
 let loginForm = document.getElementById("form")
 const baseUrl = 'http://localhost/Workmate/backend/'
+const siteUrl = "http://localhost/workmate/frontend/"
 
 loginForm.onsubmit = e =>{
     e.preventDefault()
@@ -22,8 +23,9 @@ loginForm.onsubmit = e =>{
             console.log(data)
             if (data.status== 'Login sucessful') {
                 let id = data.user_info.id
-                document.cookie = "user_id="+id
+                document.cookie = `user_id=${id};path=/`
                 console.log(document.cookie)
+                window.location.replace(siteUrl)
             }
         }
         //store user info as cookie(if login is sucesful)
