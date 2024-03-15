@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="dist/css/bootstrap.min.css">
+    <style>
+        .all{
+            width: 100%;
+            height: fit-content;
+        }
+        .btn:hover{
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <di class='mainsection' >
+        <div>
+            <button class="btn alltasks   mt-2 mx-3 " style="background-color: red;color: white;">All</button>
+            <button class="btn Pending  mt-2 mx-3 " style="background-color: blue; color: white;">Pending</button>
+            <button class="btn Procs  mt-2 mx-3 " style="background-color: rgb(83, 83, 27); color: white;">On-going tasks</button>
+            <button class="btn completed mt-2 mx-3 " style="background-color: yellowgreen; color: white;">completed</button>
+        </div>
+            <div class="all row">No tasks here! </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="dist/js/bootstrap.min.js"></script>
+    <script >
+        const dlt = (id) =>{
+            let check = confirm('Are  you sure you want to delete this task')
+            if(check){
+                fetch('http://localhost/workmate/backend/deletetask?id='+id,
+            {
+                method:'GET',
+            }).then(res => {return res.json()}).then(data =>  {
+                console.log(data)
+                if (data['status'] == 'task deleted') {
+                    console.log(data['status'])
+                    window.location.reload()
+                }
+            })
+            
+            
+            }
+
+        }
+        const start = (id) => {
+            let check = confirm('should this task begin')
+            if(check){
+                fetch('http://localhost/workmate/backend/processtask?id='+id,
+            {
+                method:'GET',
+            }).then(res => {return res.json()}).then(data =>  {
+                console.log(data)
+                if (data['status'] == 'task ongoing') {
+                    console.log(data['status'])
+                    window.location.reload()
+                }
+            })
+            
+            
+            }
+        }
+        const complete = (id) => {
+            let check = confirm('Should this task be completed')
+            if(check){
+                fetch('http://localhost/workmate/backend/completetask?id='+id,
+            {
+                method:'GET',
+            }).then(res => {return res.json()}).then(data =>  {
+                console.log(data)
+                if (data['status'] == 'task completed') {
+                    console.log(data['status'])
+                    window.location.reload()
+                }
+            })
+            
+            
+            }
+        }
+        let main = document.querySelector('.all')
+        let all = document.querySelector('.alltasks')
+        let Pending = document.querySelector('.Pending')
+        let completed = document.querySelector('.completed')
+        let Processing= document.querySelector('.Procs')
+const Url = 'http://localhost/Workmate/backend/'
+
+// let title = document.querySelector('')
+// let description = document.querySelector('')
+// let date = document.querySelector('')
+let Decoder = decodeURIComponent(document.cookie)
+let fetchid = Decoder.split(',')
+let url = fetchid[0].split('=')
+let id = url[1]
+console.log(id)
+
+fetch(`${Url}?id=${id}`,
+            {method:"GET",
+        })
+        .then(res => {return res.json()})
+        .then(data => {console.log(data)
+            if (data[0] != null) {
+                
+                main.innerHTML = ''
+                main.innerHTML = `<p class="mx-3 bold">Task</p>`
+               
+                
+                data.forEach(element => {
+                    
+                    main.innerHTML += `<div style='padding:1rem;' class="card my-2 mx-5 col-3">
+                        <p><b class='text-danger'>@</b><b class="text-primary" style="font-family:cursive;">taskid</b> ${element.id}</p>
+                        <p class='card-header'>${element.title}</p>
+                        <p class='card-body'>${element.descriptions}</p>
+                        <div class='card-footer'>
+                            <p>${element.due_date}</p>
+                            <p  class='text-primary' ><i>+</i>${element.Task_status}</p>
+                        </div>
+                        <button class="btn-danger btn dlt w-25" onclick=dlt(${element.id})>Delete task</button>
+                    </div>`
+                    
+                });
+                all.onclick = () => {
+                        main.innerHTML = ''
+                        main.innerHTML = `<p class="mx-3 bold">Task</p>`
+                        //  main.innerHTML += `<div style="display: grid;
+                        //      grid-template-columns: repeat(4,1fr);
+                        //      width:100%;">`
+                    data.forEach(element => {
+                    main.innerHTML += `<div style='padding:1rem;' class="card my-2 mx-5 col-3">
+                        <p><b class='text-danger'>@</b><b class="text-primary" style="font-family:cursive;">taskid</b> ${element.id}</p>
+                        <p class='card-header'>${element.title}</p>
+                        <p class='card-body'>${element.descriptions}</p>
+                        <div class='card-footer'>
+                            <p>${element.due_date}</p>
+                            <p  class='text-primary' ><i>+</i>${element.Task_status}</p>
+                        </div>
+                        <button class="btn-danger btn dlt w-25" onclick=dlt(${element.id})>Delete task</button>
+                    </div>`
+                    
+                }); 
+                }
+                Processing.onclick = () => {
+                        main.innerHTML = ''
+                        main.innerHTML += `<p class="text-primary">These tasks are currently running</p>`
+                        main.innerHTML += `<div style="display: grid;
+                             grid-template-columns: repeat(4,1fr);
+                             width:100%;">`
+                    data.forEach(element => {
+                  if (element.Task_status == 'processing') {
+                    main.innerHTML += `<div style='padding:1rem; class="card my-2 w-25 mx-5 col-3">
+                        <p class='card-header'>${element.title}</p>
+                        <p class='card-body'>${element.descriptions}</p>
+                        <div class='card-footer'>
+                            <p>due on ${element.due_date}</p>
+                            <p class='text-primary' ><i>+</i>${element.Task_status}</p>
+                        </div>
+                        <button class="btn-success btn dlt w-25" onclick=complete(${element.id})>✔️completed</button>
+                    </div>`
+                  }
+                    
+                }); 
+                }
+                Pending.onclick = () =>{
+                    main.innerHTML = ''
+                    main.innerHTML += `<p class="mx-2 my-2 p-2 w-25 bg-primary text-white">Pending Tasks</p>`
+                    main.innerHTML += `<div style="display: grid;
+                             grid-template-columns: repeat(4,1fr);
+                             width:100%;">`
+                    data.forEach(element => {
+    
+                        if (element.Task_status == 'pending') {
+                            main.innerHTML += `<div style='padding:1rem;' class="card my-3 w-25 mx-5">
+                        <p class="card-header">${element.title}</p>
+                        <p class='card-body'>${element.descriptions}</p>
+                        <div class='card-footer'>
+                            <p>${element.due_date}</p>
+                            <p  class='text-primary'><i>...,</i>${element.Task_status}</p>
+                            <button class="btn btn-primary" onclick="start(${element.id})">start</button>
+                        </div>
+                    </div>` 
+                        }
+                });
+                }
+                completed.onclick = () =>{
+                    main.innerHTML = ''
+                    main.innerHTML += `<p class='mx-2 my-2 p-2 w-25 bg-success text-white'>Completed Tasks</p>`
+                    main.innerHTML += `<div style="display: grid;
+                             grid-template-columns: repeat(4,1fr);
+                             width:100%;">`
+                    data.forEach(element => {
+                        
+                        if (element.Task_status == 'comleted') {
+                            main.innerHTML += `<div  style='padding:1rem;'  class="card w-25 my-3 mx-5">
+                        <p class="card-header">${element.title}</p>
+                        <p class="card-body">${element.descriptions}</p>
+                        <div class='card-footer'>
+                            <p>${element.due_date}</p>
+                            <p  class='text-success'><i>✔️</i>${element.Task_status}</p>
+                        </div>
+                        <button class="btn-danger btn dlt w-25" onclick=dlt(${element.id})>Delete task</button>
+                    </div>` 
+                        }
+                });
+                }
+            }
+        }).catch(error => console.log(error))
+    </script>
+</body>
+</html>

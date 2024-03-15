@@ -9,13 +9,21 @@ class read{
 
    
     public function readalltask($id){
-        $sql = "SELECT * from tasks as ts , users as us where '$id' = ts.initiator";
+        $sql = "SELECT * from tasks as ts where '$id' = ts.initiator ORDER BY id DESC" ;
         $stm = $this->db->query($sql);
         $stm->execute();
-        $result = $stm->fetchAll();
+
+        $result = $stm->fetchAll(\PDO::FETCH_ASSOC);
         return json_encode($result); 
 
 
+    }
+    public function readusername($id){
+        $sql = "SELECT username from users  WHERE id = '$id'" ;
+        $stm = $this->db->query($sql);
+        $stm->execute();
+        $result = $stm->fetch();
+        return $result['username'];
     }
     public function readsingletask($taskname , $creator){
         $sql = "SELECT * from tasks  WHERE title = '$taskname' and initiator = $creator";

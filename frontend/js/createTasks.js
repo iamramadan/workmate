@@ -4,13 +4,14 @@ const baseUrl = 'http://localhost/Workmate/backend/'
 
 
 
-
 Form.onsubmit = e =>{
     e.preventDefault()
     let decoder = decodeURIComponent(document.cookie)
-let x = decoder.split(';')
+    
+let x = decoder.split(',')
 let url = x[0].split('=')
 let user_id = url[1]
+
     let title = document.querySelector('#title')
     let description = document.querySelector('#description')
     let type = document.querySelector('#type')
@@ -41,7 +42,6 @@ let user_id = url[1]
     .then(data =>
         {
             console.log(data)
-            console.log('hello')
             //fill in your in your title and description
             if (data['status'] == 'Fill-in your title and description') {
                 

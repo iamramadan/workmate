@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>taskmanager</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+.butn{
+    background-color: rgb(26, 26, 131);
+    margin-left: 10px;
+    border:none;
+    padding: 1rem;
+    margin-top: 10px;
+}
+.butn a{
+    color: whitesmoke;
+    font-weight: bold;
+    text-decoration: none;
+}
+.clr-white{
+    color: white;
+}
+    </style>
 </head>
 <body>
     <div class="navbar">
@@ -17,9 +34,9 @@
              border: none;
              border-radius: 2px;">
         </div>
-        <div>
-            <button class="btn" ><a href="auth/faceclone.html">login</a></button>
-            <button class="btn" ><a href="auth/register.html" >sign-up</a></button>
+        <div class="userdiv">
+            <button class="btns" ><a href="auth/faceclone.html">login</a></button>
+            <button class="btns" ><a href="auth/register.html" >sign-up</a></button>
         </div>
     </div>
         <div class="w-100 disp-flex">
@@ -30,23 +47,53 @@
              
         </div>
         <div class="d-flex">
-            <form class="text-feild" method="post" id="form">
+            <form  method="post" id="form">
                 <input type="text" name="title" class="inp " id="title" placeholder="create task">
                 <textarea class="inp " id="description" name="description"   cols="2" rows="2" placeholder="task discription ....."></textarea>
-                <input type="datetime-local" id="date" name="due_date"  placeholder="due-time" class="inp">
+                <input type="datetime-local" id="date" name="due_date"  placeholder="due-time" class="inp" required>
                <select class="inp" id="type">
                 <option >group</option>
                 <option >single</option>
                </select>
-                <button class="btn2" type="submit">+</button>
+                <p><button class="btns" type="submit">+ Create task</button></p>
+                <button class="btns" type="reset" style="background-color:red;">reset</button>
             </form>
         </div>
-    <div class="taskbar">
-    </div>
+    <!-- <div class="taskbar">
+        <div class="arrow ">&lt;</div>
+        <div class="t-bar">
+
+        </div>
+        <div class="arrow ">&gt;</div>
+    </div> -->
+
+    <button class="butn">
+        <a href="taskpage.html">View all tasks</a>
+    </button>
+    <script>
+        if (document.cookie == '') {
+            window.location.replace('http://localhost/workmate/frontend/auth/faceclone.html')
+        }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="js/createTasks.js"></script>
-<script src="js/fetchuserdata.js"></script>
+<script>
+   console.log(document.cookie)
+   let decoder = decodeURIComponent(document.cookie)
+    let x = decoder.split(';')
+    let y = x[0].split(',')
+    let z = y[1].split('=')
+    console.log(z[1])
+    document.querySelector('.userdiv').innerHTML = `<div style="padding:1rem;font-weight:bold;">
+    <b>Welcome</b> ,<b style="font-size:1rem;font-family:cursive;">${z[1]}</b>
+                <button class="btn" id="logOut">Logout</button>
+    </div>`
+
+    document.querySelector('#logOut').onclick = () =>{
+        window.location.replace('http://localhost/workmate/frontend/auth/faceclone.html')
+    }
+</script>
 <!-- <script src="js/getTasks.js"></script> -->
 </body>
 </html>

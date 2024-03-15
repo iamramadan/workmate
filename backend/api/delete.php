@@ -12,7 +12,7 @@ class delete{
        $smt = $this->db->prepare($sql);
        $smt->execute();
         
-       print_r( [
+       echo json_encode( [
         "status"=>"task deleted",
        ]);
     }

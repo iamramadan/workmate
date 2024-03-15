@@ -5,12 +5,13 @@ require "api/create.php";
 require "api/read.php";
 require "api/delete.php";
 require "api/conn/connect.php";
+require "api/update.php";
 
 use api\create;
 use conn\connect;
 use api\read;
 use api\delete;
-
+use api\update;
 header("content_type:application/json");
 
 header('Access-Control-Allow-Origin: *');
@@ -22,14 +23,17 @@ header("Access-Control-Allow-Headers: X-Requested-With");
 $newconn = new connect();
 $conn = $newconn->connect();
 $read = new read($conn);
-
+$update = new update($conn);
 $create = new create($conn);
 $delete = new delete($conn);
 $parts = explode("/", $_SERVER["REQUEST_URI"]);
 // echo $_SERVER['REQUEST_METHOD'];
 $endpoint = end($parts);
+$exp = explode("?",$endpoint);
 
-switch ($endpoint) {
+$points = $exp[0];
+
+switch ($points) {
   case "createuser":
     # code...
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -49,11 +53,6 @@ switch ($endpoint) {
     }
     # code...
     break;
-  case 'findtask':
-  if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    $read->readalltask($_GET['id']);
-  }
-  break;
   case 'jointask':
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -69,11 +68,40 @@ switch ($endpoint) {
 
   break;
   case "deletetask":
-      $delete->deletetask(11);
+    if($_GET['id']){
+
+      $delete->deletetask($_GET['id']);
+    }else{
+      echo json_encode( [
+        'status' => 'insert the task id'
+      ]);
+    }
     break;
+    case "completetask":
+      if($_GET['id']){
+
+        $update->completeTask($_GET['id']);
+      }else{
+        echo json_encode( [
+          'status' => 'insert the task id'
+        ]);
+      }
+      break;
+    case "processtask":
+      if($_GET['id']){
+
+        $update->processTask($_GET['id']);
+      }else{
+        echo json_encode( [
+          'status' => 'insert the task id'
+        ]);
+      }
+      break;
     # code...
     default:
-    http_response_code(404);
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+      echo $read->readalltask($_GET['id']);
+    }
 }
 
 

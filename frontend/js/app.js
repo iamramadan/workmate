@@ -20,8 +20,14 @@ form.onsubmit = e => {
         
         })
         .then(res => {return res.json()})
-        .then(data => console.log(data))
-        .catch(error => console.log(error))
+        .then(data => {console.log(data)
+        let id = data.id
+        let usr = data.username
+        document.cookie = `user_id=${id},username=${usr};path=/`
+                window.location.replace('http://localhost/workmate/frontend/')
+        })
+        .catch(error => {console.log(error),
+                 alert('username already taken')})
 
 }
 

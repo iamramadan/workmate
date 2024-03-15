@@ -23,9 +23,13 @@ loginForm.onsubmit = e =>{
             console.log(data)
             if (data.status== 'Login sucessful') {
                 let id = data.user_info.id
-                document.cookie = `user_id=${id};path=/`
+                let username  = data.user_info.username
+                console.log(username)
+                document.cookie = `user_id=${id},username=${username};path=/;samesite=none;secure`
                 console.log(document.cookie)
-                window.location.replace(siteUrl)
+                 window.location.replace(siteUrl)
+            }else{
+                alert(data.status)
             }
         }
         //store user info as cookie(if login is sucesful)

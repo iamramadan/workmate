@@ -15,14 +15,23 @@ class create{
         $smt->bindValue(":username",$username, \PDO::PARAM_STR);
         $smt->bindValue(":password" ,$password, \PDO::PARAM_STR);
         $smt->execute();
+        $id = $this->findid($username);
 
         return [
             "status"=> "user registered",
-            "id"=> $this->findid($username),
+            "id"=> $id,
+            'username' => $this->readusername($id)
         ];
 
 
 
+    }
+    public function readusername($id){
+        $sql = "SELECT username from users  WHERE id = '$id'" ;
+        $stm = $this->db->query($sql);
+        $stm->execute();
+        $result = $stm->fetch();
+        return $result['username'];
     }
     public function createnewtask(array $array){
         $sql = "INSERT INTO tasks (title,descriptions,Type_s,Task_status,due_date,initiator) VALUES (:title,:description,:type,:task_status,:due_date,:initiator)";
